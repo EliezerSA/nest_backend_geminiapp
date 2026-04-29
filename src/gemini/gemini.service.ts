@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BasicPromptDto } from './dtos/basic-prompt.dto';
 import { GoogleGenAI } from "@google/genai";
 import { response } from 'express';
+import { basicPromptUseCase } from './use-cases/basic-prompt.use-case';
 
 @Injectable()
 export class GeminiService {
@@ -9,15 +10,7 @@ export class GeminiService {
     private ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
     async basicPrompt(basicPromptDto: BasicPromptDto) {
-
-        const response = await this.ai.models.generateContent({
-            model: "gemini-3-flash-preview",
-            contents: basicPromptDto.prompt,
-            config: {
-                systemInstruction: 'Responde unicamente en español en formato markdown. Usa negritas de esta forma __',
-            },
-        });
-
-            return response.text;
+        return basicPromptUseCase(this.ai, basicPromptDto);
+    
         }
 }
