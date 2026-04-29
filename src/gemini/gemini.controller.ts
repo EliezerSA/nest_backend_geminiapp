@@ -6,6 +6,7 @@ import { BasicPromptDto } from './dtos/basic-prompt.dto';
 export class GeminiController {
   constructor(private readonly geminiService: GeminiService) {}
 
+  //Lamanda al service
   @Post('basic-prompt')
    basicPrompt( @Body() basicPromptDto: BasicPromptDto){
     return this.geminiService.basicPrompt(basicPromptDto);
